@@ -1,0 +1,57 @@
+{
+  "name": "GPU",
+  "plural": "GPUs",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Id": {
+      "type": "string",
+      "default": "",
+      "id": true
+    }, 
+    "Lugar": {
+      "type": "string",
+      "default": ""
+    },
+    "NombrePC": {
+      "type": "string",
+      "default": "miner"
+    },
+    "Nro": {
+      "type": "number",
+      "default": 0
+    },
+    "IP": {
+      "type": "string",
+      "default": ""
+    },
+    "HashTotalPC": {
+      "type": "number",
+      "default": 0
+    },
+    "HashGPU": {
+      "type": "number",
+      "default": 0
+    },
+    "HashNucleo1": {
+      "type": "number",
+      "default": 0
+    },
+    "HashNucleo2": {
+      "type": "number",
+      "default": 0
+    },
+    "Temp": {
+      "type": "number",
+      "default": 0
+    }
+
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

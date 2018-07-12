@@ -1,0 +1,17 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongodb": {
+    "host": "ds129801.mlab.com",
+    "port": 29801,
+    "url": "",
+    "database": "mine",
+    "password": "tupeso2018",
+    "name": "mongodb",
+    "user": "tupeso",
+    "connector": "mongodb",
+    "allowExtendedOperators": true
+  }
+}

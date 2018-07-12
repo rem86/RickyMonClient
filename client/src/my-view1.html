@@ -1,0 +1,193 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-datatable-api/paper-datatable-api-column.html">
+<link rel="import" href="../bower_components/paper-datatable-api/paper-datatable-api.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/poly-filter/poly-filter.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<dom-module id="my-view1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 5px;
+      }
+      .center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+}
+  .right {
+    
+    position: fixed;
+    top: 66px;
+    right: 0;
+    width: 110px;
+
+
+
+}
+    </style>
+<style is="custom-style">
+    paper-progress {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+  }
+paper-progress.blue {
+  --paper-progress-active-color: var(--paper-light-blue-500);
+  --paper-progress-secondary-color: var(--paper-light-blue-100);
+  --paper-progress-indeterminate-cycle-duration: 0.5s;
+}
+
+</style>
+
+
+<div class="center">
+    
+<paper-radio-button noink checked id="lucho" on-tap="_refreshl"> Lucho </paper-radio-button>
+<paper-radio-button noink unchecked id="casa" on-tap="_refreshc"> Casa </paper-radio-button>
+<paper-icon-button icon="refresh" on-tap="_refresh">
+</paper-icon-button>
+
+</div>
+
+
+  <paper-progress id="prog" indeterminate class="blue"></paper-progress>
+
+    <iron-ajax url="http://localhost:3000/api/GPUs" last-response="{{arrayGPUs}}" id="AjaxGet"  on-response="handleAjaxGetResponse" on-error="handleAjaxGetError">
+    </iron-ajax>
+
+    <paper-datatable-api id="pdt" data="[[arrayGPUsFil]]">
+        <paper-datatable-api-column draggable-column header="Lugar" property="Lugar">
+            <template>
+              <span>{{value}}</span>
+            </template>
+          </paper-datatable-api-column>
+      <paper-datatable-api-column draggable-column header="PC" property="NombrePC">
+        <template>
+          <span>{{value}}</span>
+        </template>
+      </paper-datatable-api-column>
+
+      <paper-datatable-api-column draggable-column header="Nro" property="Nro">
+        <template>
+          <span>{{value}}</span>
+        </template>
+      </paper-datatable-api-column>
+      <paper-datatable-api-column draggable-column header="Hash" property="HashGPU">
+        <template>
+          <span>{{value}}</span>
+        </template>
+      </paper-datatable-api-column>
+      <paper-datatable-api-column draggable-column header="T" property="Temp">
+        <template>
+          <span>{{value}}</span>
+        </template>
+      </paper-datatable-api-column>
+      
+
+    </paper-datatable-api>
+    <poly-filter
+  array-to-filter="[[arrayGPUs]]"
+  filter="{{filtro}}"
+  filtered-array="{{arrayGPUsFil}}">
+</poly-filter>
+  </template>
+
+  <script>
+
+    class MyView1 extends Polymer.Element {
+
+      static get is() {
+        return 'my-view1';
+      }
+      static get properties() {
+        
+        return {
+          arrayGPUs: {
+            type: Array
+          },
+
+          tim: {
+            type: Number,
+            value: 0
+          },
+
+          verProg: {
+            type: Boolean,
+            value: false
+          }
+         }
+      }      
+      
+      
+       ready() {
+        super.ready();
+        this._refresh();
+
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+       
+        
+      }
+_refreshl(){
+  this.$.casa.checked = false;
+  this.$.lucho.checked = true;
+  this._refresh()
+}
+_refreshc(){
+  this.$.casa.checked = true;
+  this.$.lucho.checked = false;
+  this._refresh()
+}
+      _refresh() {
+
+        this.verProg = false;
+
+        this.$.prog.disabled = false;
+        this.$.AjaxGet.url = "http://localhost:3000/api/GPUs"
+        this.$.AjaxGet.generateRequest();
+             }
+
+      handleAjaxGetResponse(data) {
+        this.arrayGPUs = [];
+        this.arrayGPUs = data.detail.response;
+
+        this.$.prog.disabled = true;
+        this.verProg = true;
+        this.filtro = "";
+        if (this.$.lucho.checked == true) {
+          this.filtro = "Lucho";
+        } 
+        if (this.$.casa.checked == true) {
+          this.filtro = "Casa";
+        } 
+
+      }
+
+      handleAjaxGetError() {
+        console.log("handleAjaxGetError");
+      }
+
+    }
+    window.customElements.define(MyView1.is, MyView1);
+  </script>
+</dom-module>

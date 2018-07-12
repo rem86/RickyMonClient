@@ -1,0 +1,9 @@
+{
+  "Lugar": "Casa",
+  "NombrePC": "Minero1",
+  "GPUs": [2,2,2,1,2,2,2,2,2,2],
+  "PortHash" : 8081,
+  "LocalHash" : "192.168.0.19",
+  "PathHash" : "",
+  "RefreshTime" : 30000
+}
