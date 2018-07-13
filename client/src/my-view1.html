@@ -70,7 +70,7 @@ paper-progress.blue {
 
   <paper-progress id="prog" indeterminate class="blue"></paper-progress>
 
-    <iron-ajax url="http://localhost:3000/api/GPUs" last-response="{{arrayGPUs}}" id="AjaxGet"  on-response="handleAjaxGetResponse" on-error="handleAjaxGetError">
+    <iron-ajax url="http://warm-castle-66512.herokuapp.com/api/GPUs" last-response="{{arrayGPUs}}" id="AjaxGet"  on-response="handleAjaxGetResponse" on-error="handleAjaxGetError">
     </iron-ajax>
 
     <paper-datatable-api id="pdt" data="[[arrayGPUsFil]]">
